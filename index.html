@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Каталог фасадів</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2ee;
+    --surface: #ffffff;
+    --surface2: #ede9e4;
+    --border: #d8d0c6;
+    --text: #1a1714;
+    --text-muted: #7a7068;
+    --accent: #8b6f47;
+    --accent-dark: #6b5235;
+    --accent-light: #f0e8de;
+    --tag: #e8e0d6;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+    --shadow-hover: 0 8px 40px rgba(0,0,0,0.13);
+    --radius: 4px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    height: 68px;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .logo span { color: var(--accent); }
+
+  /* Search */
+  .search-wrap {
+    flex: 1;
+    max-width: 480px;
+    position: relative;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  #search {
+    width: 100%;
+    padding: 10px 16px 10px 42px;
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    background: var(--bg);
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  #search::placeholder { color: var(--text-muted); }
+
+  #search:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(139,111,71,0.12);
+  }
+
+  #search-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: none;
+    padding: 2px;
+    line-height: 1;
+    font-size: 18px;
+  }
+
+  #search-clear.visible { display: block; }
+
+  .header-count {
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ─── NAV / CATEGORIES ─── */
+  .categories-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .categories-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .categories-inner::-webkit-scrollbar { display: none; }
+
+  .cat-btn {
+    background: none;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 14px 22px;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    transition: color 0.2s;
+    border-bottom: 2.5px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .cat-btn:hover { color: var(--text); }
+
+  .cat-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .cat-btn .count-badge {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* ─── MAIN ─── */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 36px 32px 64px;
+  }
+
+  /* Category heading */
+  .cat-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .cat-heading h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+
+  .cat-heading p {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* Search results banner */
+  #search-banner {
+    display: none;
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 20px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    color: var(--accent-dark);
+  }
+
+  #search-banner.visible { display: block; }
+
+  /* ─── GRID ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  /* ─── CARD ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.25s, transform 0.25s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+  }
+
+  .card-img {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: var(--surface2);
+    position: relative;
+  }
+
+  .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .card:hover .card-img img { transform: scale(1.04); }
+
+  /* Placeholder when no image */
+  .card-img .no-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    gap: 10px;
+    background: var(--surface2);
+  }
+
+  .card-img .no-img svg { opacity: 0.35; }
+
+  .card-cat-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(4px);
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 3px 8px;
+  }
+
+  .card-body {
+    padding: 14px 16px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .card-code {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── EMPTY STATE ─── */
+  .empty {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-muted);
+  }
+
+  .empty svg { opacity: 0.25; margin-bottom: 16px; }
+  .empty h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; margin-bottom: 8px; color: var(--text); }
+  .empty p { font-size: 14px; }
+
+  /* ─── LIGHTBOX ─── */
+  #lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(20,16,12,0.85);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  #lightbox.open { display: flex; }
+
+  .lb-inner {
+    background: var(--surface);
+    border-radius: 6px;
+    overflow: hidden;
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    animation: lbIn 0.25s ease;
+  }
+
+  @keyframes lbIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .lb-img {
+    width: 100%;
+    max-height: 62vh;
+    object-fit: contain;
+    background: var(--surface2);
+  }
+
+  .lb-info {
+    padding: 20px 24px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .lb-category {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .lb-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .lb-code { font-size: 13px; color: var(--text-muted); }
+
+  .lb-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    box-shadow: var(--shadow);
+  }
+
+  .lb-close:hover { background: #fff; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 24px 32px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .header-inner { padding: 0 16px; gap: 16px; height: 60px; }
+    .logo { font-size: 21px; }
+    .header-count { display: none; }
+    .categories-inner { padding: 0 16px; }
+    main { padding: 24px 16px 48px; }
+    .cat-heading h1 { font-size: 28px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">Фасад<span>Про</span></a>
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Пошук за назвою або артикулом…" autocomplete="off">
+      <button id="search-clear" title="Очистити">×</button>
+    </div>
+    <div class="header-count" id="header-count"></div>
+  </div>
+</header>
+
+<!-- ── CATEGORIES NAV ── -->
+<nav class="categories-bar">
+  <div class="categories-inner" id="cat-nav"></div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+  <div class="cat-heading">
+    <h1 id="cat-title">Всі фасади</h1>
+    <p id="cat-desc"></p>
+  </div>
+  <div id="search-banner"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<!-- ── LIGHTBOX ── -->
+<div id="lightbox">
+  <div class="lb-inner">
+    <button class="lb-close" id="lb-close">×</button>
+    <img class="lb-img" id="lb-img" src="" alt="">
+    <div class="lb-info">
+      <div class="lb-category" id="lb-cat"></div>
+      <div class="lb-name" id="lb-name"></div>
+      <div class="lb-code" id="lb-code"></div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 ФасадПро — каталог меблевих фасадів</footer>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA — редагуйте тут свій каталог
+   ═══════════════════════════════════════════════
+   Структура категорії:
+   {
+     id: 'унікальний-id',
+     name: 'Назва категорії',
+     description: 'Короткий опис (необов'язково)',
+     items: [
+       { name: 'Назва фасаду', code: 'Артикул', img: 'URL або шлях до фото' },
+       ...
+     ]
+   }
+   Якщо img = '' або null — буде показана заглушка.
+═══════════════════════════════════════════════ */
+const CATALOG = [
+  {
+    id: 'mdf-gloss',
+    name: 'МДФ глянець',
+    description: 'Глянсові фасади з МДФ покриттям',
+    items: [
+      { name: 'Глянець Білий', code: 'MG-001', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80' },
+      { name: 'Глянець Антрацит', code: 'MG-002', img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80' },
+      { name: 'Глянець Капучино', code: 'MG-003', img: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400&q=80' },
+      { name: 'Глянець Льон', code: 'MG-004', img: '' },
+      { name: 'Глянець Графіт', code: 'MG-005', img: 'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=400&q=80' },
+      { name: 'Глянець Беж', code: 'MG-006', img: '' },
+      { name: 'Глянець Пісок', code: 'MG-007', img: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=400&q=80' },
+      { name: 'Глянець Крем', code: 'MG-008', img: '' },
+    ]
+  },
+  {
+    id: 'mdf-matt',
+    name: 'МДФ матовий',
+    description: 'Матові фасади — сучасний мінімалізм',
+    items: [
+      { name: 'Мат Білий Сніг', code: 'MM-001', img: 'https://images.unsplash.com/photo-1556909196-d2d1b3e38e5e?w=400&q=80' },
+      { name: 'Мат Чорний', code: 'MM-002', img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80' },
+      { name: 'Мат Сіро-бежевий', code: 'MM-003', img: '' },
+      { name: 'Мат Оливковий', code: 'MM-004', img: 'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=400&q=80' },
+      { name: 'Мат Тауп', code: 'MM-005', img: '' },
+      { name: 'Мат Димчастий', code: 'MM-006', img: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400&q=80' },
+    ]
+  },
+  {
+    id: 'derevo',
+    name: 'Дерево / Шпон',
+    description: 'Натуральні текстури дерева та шпону',
+    items: [
+      { name: 'Дуб Натуральний', code: 'DV-001', img: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400&q=80' },
+      { name: 'Горіх Американський', code: 'DV-002', img: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=400&q=80' },
+      { name: 'Береза Скандинавська', code: 'DV-003', img: '' },
+      { name: 'Тік Колоніальний', code: 'DV-004', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80' },
+      { name: 'Ясен Білий', code: 'DV-005', img: '' },
+      { name: 'Венге Темне', code: 'DV-006', img: 'https://images.unsplash.com/photo-1556909196-d2d1b3e38e5e?w=400&q=80' },
+      { name: 'Сосна Рустик', code: 'DV-007', img: '' },
+    ]
+  },
+  {
+    id: 'pvh',
+    name: 'ПВХ плівка',
+    description: 'Фасади з ПВХ плівкою — практично та доступно',
+    items: [
+      { name: 'ПВХ Білий Матовий', code: 'PV-001', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80' },
+      { name: 'ПВХ Акація', code: 'PV-002', img: '' },
+      { name: 'ПВХ Бетон Сірий', code: 'PV-003', img: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=400&q=80' },
+      { name: 'ПВХ Дуб Сонома', code: 'PV-004', img: '' },
+      { name: 'ПВХ Венге', code: 'PV-005', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80' },
+    ]
+  },
+  {
+    id: 'sklo',
+    name: 'Скло / Дзеркало',
+    description: 'Вставки зі скла та дзеркала',
+    items: [
+      { name: 'Скло Матове Прозоре', code: 'SK-001', img: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400&q=80' },
+      { name: 'Дзеркало Срібне', code: 'SK-002', img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80' },
+      { name: 'Скло Бронза', code: 'SK-003', img: '' },
+      { name: 'Дзеркало Бронза', code: 'SK-004', img: '' },
+      { name: 'Скло Лакобель Білий', code: 'SK-005', img: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=400&q=80' },
+      { name: 'Скло Лакобель Чорний', code: 'SK-006', img: '' },
+    ]
+  }
+];
+
+/* ═══════════════ APP LOGIC ═══════════════ */
+let currentCat = 'all';
+let searchQuery = '';
+
+// Flatten all items with category info
+const allItems = CATALOG.flatMap(cat =>
+  cat.items.map(item => ({ ...item, catId: cat.id, catName: cat.name }))
+);
+
+// Build category nav
+function buildNav() {
+  const nav = document.getElementById('cat-nav');
+  const totalCount = allItems.length;
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'cat-btn active';
+  allBtn.dataset.cat = 'all';
+  allBtn.innerHTML = `Всі <span class="count-badge">${totalCount}</span>`;
+  allBtn.onclick = () => selectCat('all');
+  nav.appendChild(allBtn);
+
+  CATALOG.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.dataset.cat = cat.id;
+    btn.innerHTML = `${cat.name} <span class="count-badge">${cat.items.length}</span>`;
+    btn.onclick = () => selectCat(cat.id);
+    nav.appendChild(btn);
+  });
+}
+
+function selectCat(id) {
+  currentCat = id;
+  searchQuery = '';
+  document.getElementById('search').value = '';
+  document.getElementById('search-clear').classList.remove('visible');
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === id));
+  render();
+}
+
+function getFiltered() {
+  let items = currentCat === 'all' ? allItems : allItems.filter(i => i.catId === currentCat);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    items = allItems.filter(i =>
+      i.name.toLowerCase().includes(q) || (i.code && i.code.toLowerCase().includes(q))
+    );
+  }
+  return items;
+}
+
+function render() {
+  const items = getFiltered();
+  const grid = document.getElementById('grid');
+  const title = document.getElementById('cat-title');
+  const desc = document.getElementById('cat-desc');
+  const banner = document.getElementById('search-banner');
+  const hCount = document.getElementById('header-count');
+
+  // Heading
+  if (searchQuery) {
+    title.textContent = 'Результати пошуку';
+    desc.textContent = '';
+    banner.textContent = `Знайдено: ${items.length} фасад${items.length === 1 ? '' : items.length < 5 ? 'и' : 'ів'} за запитом «${searchQuery}»`;
+    banner.classList.add('visible');
+  } else {
+    const cat = CATALOG.find(c => c.id === currentCat);
+    title.textContent = cat ? cat.name : 'Всі фасади';
+    desc.textContent = cat ? cat.description || '' : `${allItems.length} позицій у каталозі`;
+    banner.classList.remove('visible');
+  }
+
+  hCount.textContent = `${items.length} фасадів`;
+
+  // Cards
+  grid.innerHTML = '';
+
+  if (items.length === 0) {
+    grid.innerHTML = `
+      <div class="empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <h3>Нічого не знайдено</h3>
+        <p>Спробуйте інший запит або змініть категорію</p>
+      </div>`;
+    return;
+  }
+
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-img">
+        ${item.img
+          ? `<img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.parentElement.innerHTML=noImgHTML()">`
+          : noImgHTML()}
+        ${searchQuery ? `<div class="card-cat-tag">${item.catName}</div>` : ''}
+      </div>
+      <div class="card-body">
+        <div class="card-name">${highlight(item.name)}</div>
+        ${item.code ? `<div class="card-code">${highlight(item.code)}</div>` : ''}
+      </div>`;
+    card.onclick = () => openLightbox(item);
+    grid.appendChild(card);
+  });
+}
+
+function noImgHTML() {
+  return `<div class="no-img">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    <span>Фото незабаром</span>
+  </div>`;
+}
+
+function highlight(text) {
+  if (!searchQuery) return text;
+  const q = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${q})`, 'gi'), '<mark style="background:#f0e8de;color:#6b5235;border-radius:2px;padding:0 2px">$1</mark>');
+}
+
+// Lightbox
+function openLightbox(item) {
+  document.getElementById('lb-img').src = item.img || '';
+  document.getElementById('lb-img').style.display = item.img ? 'block' : 'none';
+  document.getElementById('lb-cat').textContent = item.catName;
+  document.getElementById('lb-name').textContent = item.name;
+  document.getElementById('lb-code').textContent = item.code ? `Артикул: ${item.code}` : '';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Search
+document.getElementById('search').addEventListener('input', function() {
+  searchQuery = this.value.trim();
+  document.getElementById('search-clear').classList.toggle('visible', searchQuery.length > 0);
+  render();
+});
+
+document.getElementById('search-clear').addEventListener('click', function() {
+  document.getElementById('search').value = '';
+  searchQuery = '';
+  this.classList.remove('visible');
+  render();
+});
+
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// Init
+buildNav();
+render();
+</script>
+</body>
+</html>
