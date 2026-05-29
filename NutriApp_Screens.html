@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NutriApp — всі екрани</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --green: #69C24A;
+  --green-light: #E8F5E2;
+  --green-mid: #8DD870;
+  --green-dark: #4A9A32;
+  --bg: #FAFAF8;
+  --white: #FFFFFF;
+  --text-dark: #171717;
+  --text-gray: #6B7280;
+  --text-light: #9CA3AF;
+  --border: #EAEAEA;
+  --orange: #F97316;
+  --blue: #3B82F6;
+  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', -apple-system, sans-serif;
+  background: #D1D5DB;
+  padding: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.label {
+  font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
+  color: #555; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.phone {
+  width: 393px; height: 852px;
+  background: var(--bg);
+  border-radius: 44px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.22), 0 0 0 1.5px rgba(0,0,0,0.08);
+  display: flex; flex-direction: column;
+}
+
+/* ── STATUS BAR ── */
+.status {
+  height: 44px; background: var(--white);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 22px; flex-shrink: 0;
+}
+.status .time { font-weight: 800; font-size: 14px; color: var(--text-dark); }
+.status .icons { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-dark); }
+
+/* ── NAV BAR ── */
+.navbar {
+  height: 44px; background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; flex-shrink: 0;
+}
+.navbar .ntitle { font-size: 17px; font-weight: 800; color: var(--text-dark); }
+.navbar .back {
+  position: absolute; left: 16px; font-size: 24px;
+  color: var(--text-dark); line-height: 1; cursor: pointer;
+}
+.navbar .nright { position: absolute; right: 16px; font-size: 20px; cursor: pointer; }
+
+/* ── CONTENT ── */
+.scroll {
+  flex: 1; overflow-y: auto; padding: 14px 16px;
+  scrollbar-width: none;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+/* ── BOTTOM NAV ── */
+.bnav {
+  height: 74px; background: var(--white);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 8px 10px; flex-shrink: 0;
+}
+.bitem {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 3px; cursor: pointer;
+}
+.bicon {
+  width: 34px; height: 34px; border-radius: 17px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px;
+}
+.bitem.on .bicon { background: var(--green-light); }
+.bitem span { font-size: 10px; font-weight: 700; color: var(--text-light); }
+.bitem.on span { color: var(--green); }
+
+/* ── CARD ── */
+.card {
+  background: var(--white); border-radius: 18px;
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  margin-bottom: 12px; overflow: hidden;
+}
+.cp { padding: 16px; }
+
+/* ── BUTTONS ── */
+.btn {
+  width: 100%; height: 54px; border-radius: 14px;
+  font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+  border: none; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; gap: 8px;
+}
+.btn-g { background: var(--green); color: #fff; }
+.btn-o { background: transparent; color: var(--green); border: 2px solid var(--green); }
+.btn-r { background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; height: 50px; }
+.btn + .btn { margin-top: 10px; }
+
+/* ── INPUT ── */
+.inp {
+  width: 100%; height: 52px; border-radius: 12px;
+  border: 1.5px solid var(--border); background: var(--white);
+  padding: 0 16px; font-family: 'Nunito', sans-serif;
+  font-size: 15px; color: var(--text-dark); outline: none;
+  margin-bottom: 12px; display: flex; align-items: center;
+}
+.inp-ph { color: var(--text-light); font-size: 15px; }
+
+/* ── FOOD ROW ── */
+.frow {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.frow:last-of-type { border-bottom: none; }
+.ficon {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 21px; flex-shrink: 0;
+}
+.fi { flex: 1; }
+.fn { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+.fs { font-size: 12px; color: var(--text-gray); margin-top: 2px; }
+.fk { font-size: 13px; font-weight: 700; color: var(--text-gray); }
+
+/* ── CHIP ── */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.chip {
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+}
+.chip.on { background: var(--green); color: #fff; }
+.chip.off { background: var(--white); color: var(--text-gray); border: 1.5px solid var(--border); }
+
+/* ── SEARCH BAR ── */
+.search {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 24px; padding: 0 16px; height: 46px; margin-bottom: 14px;
+}
+.search span { font-size: 18px; }
+.search p { font-size: 15px; color: var(--text-light); font-weight: 600; }
+
+/* ── MACRO ── */
+.macro { margin-bottom: 10px; }
+.macro-top { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.macro-top span { font-size: 12px; font-weight: 700; color: var(--text-gray); }
+.track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.fill { height: 100%; border-radius: 4px; }
+
+/* ── SETTINGS ROW ── */
+.srow {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 16px; border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.srow:last-child { border-bottom: none; }
+.sico { font-size: 20px; width: 28px; text-align: center; }
+.slbl { flex: 1; font-size: 15px; font-weight: 700; color: var(--text-dark); }
+.sarr { color: var(--text-light); font-size: 18px; }
+
+/* ── RECIPE CARD ── */
+.rcard {
+  display: flex; background: var(--white);
+  border-radius: 16px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); margin-bottom: 10px; overflow: hidden;
+  height: 100px;
+}
+.rthumb {
+  width: 100px; height: 100px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 52px;
+}
+.rinfo { padding: 16px 14px; display: flex; flex-direction: column; justify-content: center; }
+.rname { font-size: 15px; font-weight: 800; color: var(--text-dark); margin-bottom: 5px; }
+.rmeta { font-size: 13px; color: var(--text-gray); font-weight: 600; }
+
+/* ── PORTION OPTION ── */
+.popt {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 14px; border-radius: 12px; margin-bottom: 10px;
+  border: 1.5px solid var(--border); background: var(--white); cursor: pointer;
+}
+.popt.sel { background: var(--green-light); border-color: var(--green); }
+.popt-lbl { font-size: 15px; font-weight: 700; color: var(--text-dark); }
+.pcheck {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800;
+}
+.pcheck.yes { background: var(--green); color: #fff; }
+.pcheck.no { border: 2px solid var(--border); }
+
+/* ── STAT BAR ── */
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 100px; padding: 0 4px; }
+.bar-col { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+.bar { width: 100%; border-radius: 7px 7px 0 0; background: var(--green); }
+.bar.dim { opacity: 0.4; }
+.bar-lbl { font-size: 11px; font-weight: 700; color: var(--text-gray); }
+
+/* ── PIE LEGEND ── */
+.legend-dot {
+  display: inline-block; width: 10px; height: 10px;
+  border-radius: 50%; margin-right: 7px;
+}
+
+/* ── WEEKDAY ROW ── */
+.wdays { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; }
+.wday {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; cursor: pointer;
+}
+.wday-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800;
+}
+.wday.on .wday-circle { background: var(--green); color: #fff; }
+.wday.off .wday-circle { color: var(--text-gray); }
+.wday-dot { width: 5px; height: 5px; border-radius: 50%; }
+.wday.on .wday-dot { background: var(--green); }
+.wday.off .wday-dot { background: transparent; }
+
+/* ── PERIOD TABS ── */
+.ptabs {
+  display: flex; background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 22px; padding: 3px; margin-bottom: 14px;
+}
+.ptab {
+  flex: 1; height: 36px; border-radius: 18px; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  color: var(--text-gray);
+}
+.ptab.on { background: var(--green); color: #fff; }
+
+/* ── CAMERA ── */
+.camera-screen { background: #111; display: flex; flex-direction: column; height: 100%; }
+.cam-preview {
+  flex: 1; background: #1A2A1A;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; font-size: 120px;
+}
+.scan-frame {
+  position: absolute; top: 30px; left: 52px; right: 52px; bottom: 30px;
+  border: 2px solid rgba(255,255,255,0.3); border-radius: 20px;
+}
+.corner {
+  position: absolute; width: 28px; height: 28px;
+  border-color: #69C24A; border-style: solid;
+}
+.corner.tl { top: -1px; left: -1px; border-width: 3px 0 0 3px; border-radius: 6px 0 0 0; }
+.corner.tr { top: -1px; right: -1px; border-width: 3px 3px 0 0; border-radius: 0 6px 0 0; }
+.corner.bl { bottom: -1px; left: -1px; border-width: 0 0 3px 3px; border-radius: 0 0 0 6px; }
+.corner.br { bottom: -1px; right: -1px; border-width: 0 3px 3px 0; border-radius: 0 0 6px 0; }
+.scan-line {
+  position: absolute; left: 0; right: 0; top: 50%;
+  height: 2px; background: linear-gradient(90deg, transparent, #69C24A, transparent);
+  border-radius: 1px; opacity: 0.8;
+}
+.cam-hint {
+  text-align: center; padding: 16px;
+  font-size: 15px; color: rgba(255,255,255,0.7); font-weight: 600;
+  background: #111;
+}
+.cam-controls {
+  background: #111; padding: 16px 32px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cam-side-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; cursor: pointer;
+}
+.cam-main-btn {
+  width: 78px; height: 78px; border-radius: 50%;
+  background: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; cursor: pointer;
+  box-shadow: 0 0 0 5px rgba(255,255,255,0.2);
+}
+
+/* ── CIRCLE SVG ── */
+.kcal-circle { display: flex; align-items: center; justify-content: center; position: relative; }
+.kcal-center { position: absolute; text-align: center; }
+.kcal-num { font-size: 34px; font-weight: 900; color: var(--text-dark); line-height: 1; }
+.kcal-sub { font-size: 13px; color: var(--text-gray); font-weight: 600; margin-top: 4px; }
+.kcal-goal { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+
+/* ── ONBOARDING DOTS ── */
+.dots { display: flex; gap: 8px; justify-content: center; margin: 24px 0; }
+.dot { width: 10px; height: 10px; border-radius: 5px; }
+.dot.on { background: var(--green); width: 24px; }
+.dot.off { background: var(--border); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+  1. ONBOARDING
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">1. Онбординг</div>
+<div class="phone" id="screen-onboarding">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="scroll" style="display:flex;flex-direction:column;align-items:center;padding-top:40px;">
+    <div style="width:160px;height:160px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:86px;margin-bottom:36px;">🌿</div>
+    <h1 style="font-size:28px;font-weight:900;color:var(--text-dark);text-align:center;line-height:1.25;margin-bottom:16px;">Твій шлях до<br>здорового тебе</h1>
+    <p style="font-size:15px;color:var(--text-gray);text-align:center;font-weight:600;line-height:1.6;padding:0 24px;">Плануй раціон, рахуй калорії<br>та досягай своїх цілей</p>
+    <div class="dots" style="margin-top:48px;">
+      <div class="dot on"></div>
+      <div class="dot off"></div>
+      <div class="dot off"></div>
+    </div>
+    <div style="width:100%;margin-top:40px;">
+      <button class="btn btn-g">🚀 Почати</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  2. LOGIN
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">2. Реєстрація / Вхід</div>
+<div class="phone" id="screen-login">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="scroll">
+    <div style="text-align:center;margin:20px 0 24px;">
+      <h2 style="font-size:24px;font-weight:900;color:var(--text-dark);">Вітаємо знову! 👋</h2>
+      <p style="font-size:14px;color:var(--text-gray);margin-top:6px;font-weight:600;">Увійдіть, щоб продовжити</p>
+    </div>
+    <div class="card cp">
+      <div class="inp"><span class="inp-ph">📧 Email або телефон</span></div>
+      <div class="inp"><span class="inp-ph">🔒 Пароль</span></div>
+      <div style="text-align:right;margin-bottom:16px;">
+        <span style="font-size:14px;color:var(--green);font-weight:700;cursor:pointer;">Забули пароль?</span>
+      </div>
+      <button class="btn btn-g">Увійти</button>
+      <div style="display:flex;align-items:center;gap:12px;margin:16px 0;">
+        <div style="flex:1;height:1px;background:var(--border);"></div>
+        <span style="font-size:13px;color:var(--text-gray);font-weight:700;">або</span>
+        <div style="flex:1;height:1px;background:var(--border);"></div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button style="flex:1;height:48px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);font-size:22px;cursor:pointer;">G</button>
+        <button style="flex:1;height:48px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);font-size:22px;cursor:pointer;">🍎</button>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:14px;color:var(--text-gray);font-weight:600;margin-top:16px;">
+      Немає акаунту? <span style="color:var(--green);font-weight:800;cursor:pointer;">Зареєструватись</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  3. HOME
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">3. Головний екран</div>
+<div class="phone" id="screen-home">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar">
+    <span class="ntitle">Сьогодні, 20 травня</span>
+    <span class="nright">📅</span>
+  </div>
+  <div class="scroll">
+    <!-- Calories circle -->
+    <div class="card cp" style="text-align:center;">
+      <div class="kcal-circle" style="margin:0 auto 12px;">
+        <svg width="160" height="160" viewBox="0 0 160 160">
+          <circle cx="80" cy="80" r="65" fill="none" stroke="#E8F5E2" stroke-width="14"/>
+          <circle cx="80" cy="80" r="65" fill="none" stroke="#69C24A" stroke-width="14"
+            stroke-dasharray="205 408" stroke-dashoffset="102" stroke-linecap="round"/>
+        </svg>
+        <div class="kcal-center">
+          <div class="kcal-num">512</div>
+          <div class="kcal-sub">Залишилось</div>
+          <div class="kcal-goal">Ціль: 2000 ккал</div>
+        </div>
+      </div>
+      <!-- Macros -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding-top:8px;border-top:1px solid var(--border);">
+        <div>
+          <div style="font-size:11px;color:var(--text-gray);font-weight:700;margin-bottom:5px;">Білки</div>
+          <div class="track"><div class="fill" style="width:80%;background:#F97316;"></div></div>
+          <div style="font-size:11px;color:var(--text-gray);margin-top:4px;font-weight:600;">120/150г</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text-gray);font-weight:700;margin-bottom:5px;">Жири</div>
+          <div class="track"><div class="fill" style="width:57%;background:#3B82F6;"></div></div>
+          <div style="font-size:11px;color:var(--text-gray);margin-top:4px;font-weight:600;">60/70г</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text-gray);font-weight:700;margin-bottom:5px;">Вуглеводи</div>
+          <div class="track"><div class="fill" style="width:72%;background:#69C24A;"></div></div>
+          <div style="font-size:11px;color:var(--text-gray);margin-top:4px;font-weight:600;">180/250г</div>
+        </div>
+      </div>
+    </div>
+    <!-- Meals -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="padding:14px 16px 4px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:17px;font-weight:800;color:var(--text-dark);">Прийоми їжі</span>
+      </div>
+      <div style="padding:0 16px;">
+        <div class="frow">
+          <div class="ficon">☀️</div>
+          <div class="fi"><div class="fn">Сніданок</div></div>
+          <span class="fk">560 ккал</span>
+        </div>
+        <div class="frow">
+          <div class="ficon">🌤</div>
+          <div class="fi"><div class="fn">Обід</div></div>
+          <span class="fk">620 ккал</span>
+        </div>
+        <div class="frow">
+          <div class="ficon">🌙</div>
+          <div class="fi"><div class="fn">Вечеря</div></div>
+          <span style="font-size:13px;color:var(--text-light);">—</span>
+        </div>
+        <div class="frow">
+          <div class="ficon">🍎</div>
+          <div class="fi"><div class="fn">Перекус</div></div>
+          <span style="font-size:13px;color:var(--text-light);">—</span>
+        </div>
+      </div>
+      <div style="padding:12px 16px 16px;">
+        <button class="btn btn-g">+ Додати їжу</button>
+      </div>
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="bitem on"><div class="bicon">⌂</div><span>Головна</span></div>
+    <div class="bitem"><div class="bicon">📖</div><span>Рецепти</span></div>
+    <div class="bitem"><div class="bicon">⊞</div><span>План</span></div>
+    <div class="bitem"><div class="bicon">📊</div><span>Статистика</span></div>
+    <div class="bitem"><div class="bicon">👤</div><span>Профіль</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  4. DIARY
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">4. Щоденник</div>
+<div class="phone" id="screen-diary">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar">
+    <span class="back">‹</span>
+    <span class="ntitle">Сьогодні, 20 травня</span>
+    <span class="nright">📅</span>
+  </div>
+  <div class="scroll">
+    <!-- Breakfast -->
+    <div class="card" style="margin-bottom:12px;">
+      <div class="meal-header" style="padding:14px 16px 6px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:16px;font-weight:800;color:var(--text-dark);">☀️ Сніданок</span>
+        <span style="font-size:14px;font-weight:700;color:var(--text-gray);">560 ккал</span>
+      </div>
+      <div style="padding:0 16px;">
+        <div class="frow">
+          <div class="ficon">🍓</div>
+          <div class="fi"><div class="fn">Вівсянка з ягодами</div><div class="fs">200 г</div></div>
+          <span class="fk">240 ккал</span>
+        </div>
+        <div class="frow">
+          <div class="ficon">🥚</div>
+          <div class="fi"><div class="fn">Яйце варене</div><div class="fs">1 шт</div></div>
+          <span class="fk">78 ккал</span>
+        </div>
+        <div class="frow">
+          <div class="ficon">🥑</div>
+          <div class="fi"><div class="fn">Авокадо</div><div class="fs">50 г</div></div>
+          <span class="fk">80 ккал</span>
+        </div>
+        <div class="frow">
+          <div class="ficon">☕</div>
+          <div class="fi"><div class="fn">Кава без цукру</div><div class="fs">300 мл</div></div>
+          <span class="fk">2 ккал</span>
+        </div>
+      </div>
+      <div style="padding:10px 16px 14px;">
+        <span style="font-size:14px;color:var(--green);font-weight:800;cursor:pointer;">+ Додати страву</span>
+      </div>
+    </div>
+    <!-- Lunch -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="padding:14px 16px 6px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:16px;font-weight:800;color:var(--text-dark);">🌤 Обід</span>
+        <span style="font-size:14px;font-weight:700;color:var(--text-gray);">620 ккал</span>
+      </div>
+      <div style="padding:0 16px;">
+        <div class="frow">
+          <div class="ficon">🥗</div>
+          <div class="fi"><div class="fn">Курячий салат</div><div class="fs">350 г</div></div>
+          <span class="fk">390 ккал</span>
+        </div>
+      </div>
+      <div style="padding:10px 16px 14px;">
+        <span style="font-size:14px;color:var(--green);font-weight:800;cursor:pointer;">+ Додати страву</span>
+      </div>
+    </div>
+    <!-- Dinner -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:16px;font-weight:800;color:var(--text-dark);">🌙 Вечеря</span>
+      </div>
+      <div style="padding:0 16px 14px;">
+        <span style="font-size:14px;color:var(--green);font-weight:800;cursor:pointer;">+ Додати страву</span>
+      </div>
+    </div>
+    <!-- Snack -->
+    <div class="card">
+      <div style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:16px;font-weight:800;color:var(--text-dark);">🍎 Перекуси</span>
+      </div>
+      <div style="padding:0 16px 14px;">
+        <span style="font-size:14px;color:var(--green);font-weight:800;cursor:pointer;">+ Додати страву</span>
+      </div>
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="bitem on"><div class="bicon">⌂</div><span>Головна</span></div>
+    <div class="bitem"><div class="bicon">📖</div><span>Рецепти</span></div>
+    <div class="bitem"><div class="bicon">⊞</div><span>План</span></div>
+    <div class="bitem"><div class="bicon">📊</div><span>Статистика</span></div>
+    <div class="bitem"><div class="bicon">👤</div><span>Профіль</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  5. CAMERA SCAN
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">5. Камера / AI Скан</div>
+<div class="phone" id="screen-camera" style="background:#111;">
+  <div class="status" style="background:#111;">
+    <span class="time" style="color:#fff;">9:41</span>
+    <div class="icons" style="color:#fff;"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div style="flex:1;background:#1C2B1C;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+    <div style="font-size:130px;opacity:0.85;">🥗</div>
+    <div class="scan-frame">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <div class="scan-line"></div>
+    </div>
+    <div style="position:absolute;bottom:20px;left:0;right:0;text-align:center;">
+      <span style="font-size:15px;color:rgba(255,255,255,0.75);font-weight:700;background:rgba(0,0,0,0.3);padding:8px 20px;border-radius:20px;">Наведіть камеру на страву</span>
+    </div>
+  </div>
+  <div style="background:#111;padding:20px 32px 36px;display:flex;align-items:center;justify-content:space-between;">
+    <div class="cam-side-btn">🖼</div>
+    <div class="cam-main-btn">📷</div>
+    <div class="cam-side-btn">✕</div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  6. AI RESULT
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">6. Результат AI</div>
+<div class="phone" id="screen-airesult">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar">
+    <span class="back">‹</span>
+    <span class="ntitle">Результат розпізнавання</span>
+  </div>
+  <div class="scroll">
+    <!-- Photo preview -->
+    <div style="background:#2A4A1A;border-radius:16px;height:120px;display:flex;align-items:center;justify-content:center;font-size:80px;margin-bottom:12px;">🥗</div>
+    <!-- Detected items -->
+    <div class="card cp" style="margin-bottom:12px;">
+      <div style="font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:12px;">🔍 Виявлено страви</div>
+      <div class="frow">
+        <div class="ficon">🍗</div>
+        <div class="fi"><div class="fn">Куряче філе (150г)</div><div class="fs">248 ккал</div></div>
+        <div style="width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;">✓</div>
+      </div>
+      <div class="frow">
+        <div class="ficon">🌾</div>
+        <div class="fi"><div class="fn">Кіноа (100г)</div><div class="fs">100 ккал</div></div>
+        <div style="width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;">✓</div>
+      </div>
+      <div class="frow">
+        <div class="ficon">🥬</div>
+        <div class="fi"><div class="fn">Овочі (150г)</div><div class="fs">65 ккал</div></div>
+        <div style="width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;">✓</div>
+      </div>
+      <div style="border-top:1px solid var(--border);margin-top:8px;padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:15px;color:var(--text-gray);font-weight:700;">Разом</span>
+        <span style="font-size:18px;font-weight:900;color:var(--text-dark);">413 ккал</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+        <span style="font-size:14px;color:var(--text-gray);font-weight:600;">Порція</span>
+        <span style="font-size:14px;color:var(--green);font-weight:800;cursor:pointer;">1 порція ▾</span>
+      </div>
+    </div>
+    <button class="btn btn-g" style="margin-bottom:10px;">Додати до щоденника</button>
+    <button class="btn btn-o">Редагувати</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  7. RECIPES
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">7. Рецепти</div>
+<div class="phone" id="screen-recipes">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar">
+    <span class="ntitle">Рецепти</span>
+  </div>
+  <div class="scroll">
+    <div class="search" style="margin-bottom:12px;">
+      <span>🔍</span>
+      <p>Пошук рецептів...</p>
+    </div>
+    <div class="chips">
+      <div class="chip on">Всі</div>
+      <div class="chip off">Сніданок</div>
+      <div class="chip off">Обід</div>
+      <div class="chip off">Вечеря</div>
+      <div class="chip off">Перекус</div>
+    </div>
+    <div class="rcard"><div class="rthumb" style="background:#E8F5E2;">🥞</div><div class="rinfo"><div class="rname">Панкейки з бананом</div><div class="rmeta">⏱ 20 хв &nbsp;•&nbsp; 🔥 260 ккал</div></div></div>
+    <div class="rcard"><div class="rthumb" style="background:#E8F0FE;">🥣</div><div class="rinfo"><div class="rname">Боул з кіноа</div><div class="rmeta">⏱ 25 хв &nbsp;•&nbsp; 🔥 480 ккал</div></div></div>
+    <div class="rcard"><div class="rthumb" style="background:#FEF3E8;">🍓</div><div class="rinfo"><div class="rname">Смузі з ягодами</div><div class="rmeta">⏱ 10 хв &nbsp;•&nbsp; 🔥 250 ккал</div></div></div>
+    <div class="rcard"><div class="rthumb" style="background:#E8F5E2;">🍗</div><div class="rinfo"><div class="rname">Курячі котлети</div><div class="rmeta">⏱ 30 хв &nbsp;•&nbsp; 🔥 400 ккал</div></div></div>
+    <div class="rcard"><div class="rthumb" style="background:#FFF0F0;">🐟</div><div class="rinfo"><div class="rname">Лосось на грилі</div><div class="rmeta">⏱ 20 хв &nbsp;•&nbsp; 🔥 350 ккал</div></div></div>
+  </div>
+  <div class="bnav">
+    <div class="bitem"><div class="bicon">⌂</div><span>Головна</span></div>
+    <div class="bitem on"><div class="bicon">📖</div><span>Рецепти</span></div>
+    <div class="bitem"><div class="bicon">⊞</div><span>План</span></div>
+    <div class="bitem"><div class="bicon">📊</div><span>Статистика</span></div>
+    <div class="bitem"><div class="bicon">👤</div><span>Профіль</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  8. RECIPE DETAIL
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">8. Деталі рецепту</div>
+<div class="phone" id="screen-recipe-detail">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div style="height:220px;background:linear-gradient(135deg,#C8EDB8,#E8F5E2);display:flex;align-items:center;justify-content:center;font-size:110px;position:relative;flex-shrink:0;">
+    🥗
+    <div style="position:absolute;top:16px;left:16px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;">‹</div>
+    <div style="position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;">❤️</div>
+  </div>
+  <div class="scroll">
+    <div class="card cp" style="margin-bottom:12px;">
+      <h2 style="font-size:20px;font-weight:900;color:var(--text-dark);margin-bottom:6px;">Курячий салат</h2>
+      <div style="display:flex;gap:16px;">
+        <span style="font-size:13px;color:var(--text-gray);font-weight:700;">⏱ 30 хв</span>
+        <span style="font-size:13px;color:var(--text-gray);font-weight:700;">🔥 450 ккал</span>
+        <span style="font-size:13px;color:var(--text-gray);font-weight:700;">⭐ 4.8</span>
+      </div>
+    </div>
+    <div class="card cp" style="margin-bottom:12px;">
+      <div style="font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:12px;">Інгредієнти <span style="color:var(--text-gray);font-weight:600;font-size:14px;">(2 порції)</span></div>
+      <div class="frow"><div class="ficon">🍗</div><div class="fi"><div class="fn">Куряче філе</div></div><span class="fk">200 г</span></div>
+      <div class="frow"><div class="ficon">🥬</div><div class="fi"><div class="fn">Мікс салату</div></div><span class="fk">100 г</span></div>
+      <div class="frow"><div class="ficon">🍅</div><div class="fi"><div class="fn">Помідори черрі</div></div><span class="fk">100 г</span></div>
+      <div class="frow"><div class="ficon">🥒</div><div class="fi"><div class="fn">Огірок</div></div><span class="fk">100 г</span></div>
+      <div class="frow"><div class="ficon">🫒</div><div class="fi"><div class="fn">Оливкова олія</div></div><span class="fk">1 ст.л.</span></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+        <span style="font-size:14px;color:var(--green);font-weight:800;cursor:pointer;">📋 Покроковий рецепт ›</span>
+      </div>
+    </div>
+    <button class="btn btn-g">Додати до щоденника</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  9. PORTION
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">9. Вибір порції</div>
+<div class="phone" id="screen-portion">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar">
+    <span class="back">‹</span>
+    <span class="ntitle">Вибір порції</span>
+  </div>
+  <div class="scroll">
+    <div class="card cp" style="margin-bottom:16px;text-align:center;">
+      <span style="font-size:40px;">🥗</span>
+      <div style="font-size:17px;font-weight:800;color:var(--text-dark);margin-top:8px;">Курячий салат</div>
+      <div style="font-size:13px;color:var(--text-gray);font-weight:600;margin-top:4px;">450 ккал / порція</div>
+    </div>
+    <div style="font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:12px;">Порція</div>
+    <div class="popt sel"><span class="popt-lbl">1 порція (400 ккал)</span><div class="pcheck yes">✓</div></div>
+    <div class="popt"><span class="popt-lbl">2 порції (800 ккал)</span><div class="pcheck no"></div></div>
+    <div class="popt"><span class="popt-lbl">0.5 порції (200 ккал)</span><div class="pcheck no"></div></div>
+    <div style="font-size:16px;font-weight:800;color:var(--text-dark);margin:16px 0 10px;">Своя кількість</div>
+    <div class="card cp" style="margin-bottom:0;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="inp" style="flex:1;margin:0;border-color:var(--green);"><span class="inp-ph">Кількість, г</span></div>
+        <div style="font-size:13px;color:var(--text-gray);font-weight:700;white-space:nowrap;">= 0 ккал</div>
+      </div>
+    </div>
+    <div style="height:16px;"></div>
+    <button class="btn btn-g">Додати до щоденника</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  10. MEAL PLAN
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">10. План харчування</div>
+<div class="phone" id="screen-mealplan">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar">
+    <span class="ntitle">План на тиждень</span>
+  </div>
+  <div class="scroll">
+    <!-- Weekdays -->
+    <div class="card" style="margin-bottom:12px;">
+      <div class="wdays">
+        <div class="wday off"><div class="wday-circle">Пн</div><div class="wday-dot"></div></div>
+        <div class="wday off"><div class="wday-circle">Вт</div><div class="wday-dot"></div></div>
+        <div class="wday on"><div class="wday-circle">Ср</div><div class="wday-dot"></div></div>
+        <div class="wday off"><div class="wday-circle">Чт</div><div class="wday-dot"></div></div>
+        <div class="wday off"><div class="wday-circle">Пт</div><div class="wday-dot"></div></div>
+        <div class="wday off"><div class="wday-circle">Сб</div><div class="wday-dot"></div></div>
+        <div class="wday off"><div class="wday-circle">Нд</div><div class="wday-dot"></div></div>
+      </div>
+    </div>
+    <!-- Breakfast -->
+    <div class="card" style="margin-bottom:10px;">
+      <div style="padding:12px 16px 4px;font-size:13px;font-weight:800;color:var(--text-gray);">СНІДАНОК</div>
+      <div style="padding:4px 16px 12px;">
+        <div class="frow">
+          <div class="ficon">🍓</div>
+          <div class="fi"><div class="fn">Вівсянка з ягодами</div><div class="fs">200 г</div></div>
+          <span class="fk">320 ккал</span>
+        </div>
+      </div>
+    </div>
+    <!-- Lunch -->
+    <div class="card" style="margin-bottom:10px;">
+      <div style="padding:12px 16px 4px;font-size:13px;font-weight:800;color:var(--text-gray);">ОБІД</div>
+      <div style="padding:4px 16px 12px;">
+        <div class="frow">
+          <div class="ficon">🥗</div>
+          <div class="fi"><div class="fn">Курячий салат</div><div class="fs">350 г</div></div>
+          <span class="fk">450 ккал</span>
+        </div>
+      </div>
+    </div>
+    <!-- Dinner -->
+    <div class="card" style="margin-bottom:10px;">
+      <div style="padding:12px 16px 4px;font-size:13px;font-weight:800;color:var(--text-gray);">ВЕЧЕРЯ</div>
+      <div style="padding:4px 16px 12px;">
+        <div class="frow">
+          <div class="ficon">🐟</div>
+          <div class="fi"><div class="fn">Лосось на грилі</div><div class="fs">200 г</div></div>
+          <span class="fk">500 ккал</span>
+        </div>
+      </div>
+    </div>
+    <!-- Snack -->
+    <div class="card" style="margin-bottom:14px;">
+      <div style="padding:12px 16px 4px;font-size:13px;font-weight:800;color:var(--text-gray);">ПЕРЕКУС</div>
+      <div style="padding:4px 16px 12px;">
+        <div class="frow">
+          <div class="ficon">🥛</div>
+          <div class="fi"><div class="fn">Грецький йогурт з горіхами</div><div class="fs">150 г</div></div>
+          <span class="fk">200 ккал</span>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-g">+ Додати прийом їжі</button>
+  </div>
+  <div class="bnav">
+    <div class="bitem"><div class="bicon">⌂</div><span>Головна</span></div>
+    <div class="bitem"><div class="bicon">📖</div><span>Рецепти</span></div>
+    <div class="bitem on"><div class="bicon">⊞</div><span>План</span></div>
+    <div class="bitem"><div class="bicon">📊</div><span>Статистика</span></div>
+    <div class="bitem"><div class="bicon">👤</div><span>Профіль</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  11. STATISTICS
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">11. Статистика</div>
+<div class="phone" id="screen-statistics">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar"><span class="ntitle">Статистика</span></div>
+  <div class="scroll">
+    <div class="ptabs" style="margin-bottom:14px;">
+      <div class="ptab on">Тиждень</div>
+      <div class="ptab">Місяць</div>
+      <div class="ptab">Рік</div>
+    </div>
+    <!-- Calories -->
+    <div class="card cp" style="margin-bottom:12px;">
+      <div style="font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:4px;">Калорії</div>
+      <div style="font-size:13px;color:var(--text-gray);font-weight:600;margin-bottom:16px;">Середнє: 1820 ккал</div>
+      <div class="bars">
+        <div class="bar-col"><div class="bar dim" style="height:72%;"></div><div class="bar-lbl">Пн</div></div>
+        <div class="bar-col"><div class="bar dim" style="height:66%;"></div><div class="bar-lbl">Вт</div></div>
+        <div class="bar-col"><div class="bar" style="height:84%;"></div><div class="bar-lbl">Ср</div></div>
+        <div class="bar-col"><div class="bar dim" style="height:76%;"></div><div class="bar-lbl">Чт</div></div>
+        <div class="bar-col"><div class="bar dim" style="height:70%;"></div><div class="bar-lbl">Пт</div></div>
+        <div class="bar-col"><div class="bar dim" style="height:88%;"></div><div class="bar-lbl">Сб</div></div>
+        <div class="bar-col"><div class="bar dim" style="height:73%;"></div><div class="bar-lbl">Нд</div></div>
+      </div>
+    </div>
+    <!-- BJW -->
+    <div class="card cp" style="margin-bottom:12px;">
+      <div style="font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:14px;">БЖВ</div>
+      <div style="display:flex;align-items:center;gap:20px;">
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="42" fill="none" stroke="#F97316" stroke-width="18" stroke-dasharray="79 264" stroke-dashoffset="66"/>
+          <circle cx="55" cy="55" r="42" fill="none" stroke="#3B82F6" stroke-width="18" stroke-dasharray="53 264" stroke-dashoffset="-13"/>
+          <circle cx="55" cy="55" r="42" fill="none" stroke="#69C24A" stroke-width="18" stroke-dasharray="106 264" stroke-dashoffset="-66"/>
+        </svg>
+        <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+          <div><span class="legend-dot" style="background:#F97316;"></span><span style="font-size:13px;font-weight:700;color:var(--text-dark);">Білки — 100г</span><br><span style="font-size:12px;color:var(--text-gray);margin-left:17px;">30%</span></div>
+          <div><span class="legend-dot" style="background:#3B82F6;"></span><span style="font-size:13px;font-weight:700;color:var(--text-dark);">Жири — 40г</span><br><span style="font-size:12px;color:var(--text-gray);margin-left:17px;">20%</span></div>
+          <div><span class="legend-dot" style="background:#69C24A;"></span><span style="font-size:13px;font-weight:700;color:var(--text-dark);">Вуглеводи — 160г</span><br><span style="font-size:12px;color:var(--text-gray);margin-left:17px;">40%</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Progress -->
+    <div class="card cp">
+      <div style="font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:14px;">Прогрес ваги</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+        <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:var(--text-dark);">62</div><div style="font-size:12px;color:var(--text-gray);">Поч. вага</div></div>
+        <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:var(--green);">58.5</div><div style="font-size:12px;color:var(--text-gray);">Зараз</div></div>
+        <div style="text-align:center;"><div style="font-size:20px;font-weight:900;color:var(--text-gray);">55</div><div style="font-size:12px;color:var(--text-gray);">Ціль</div></div>
+      </div>
+      <div class="track" style="height:10px;border-radius:6px;"><div class="fill" style="width:60%;background:linear-gradient(90deg,var(--green),var(--green-mid));"></div></div>
+    </div>
+    <div style="text-align:center;padding:14px 0;">
+      <span style="font-size:14px;color:var(--green);font-weight:800;cursor:pointer;">Детальна статистика ›</span>
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="bitem"><div class="bicon">⌂</div><span>Головна</span></div>
+    <div class="bitem"><div class="bicon">📖</div><span>Рецепти</span></div>
+    <div class="bitem"><div class="bicon">⊞</div><span>План</span></div>
+    <div class="bitem on"><div class="bicon">📊</div><span>Статистика</span></div>
+    <div class="bitem"><div class="bicon">👤</div><span>Профіль</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  12. PROFILE
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">12. Профіль</div>
+<div class="phone" id="screen-profile">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar"><span class="ntitle">Профіль</span></div>
+  <div class="scroll">
+    <!-- Avatar -->
+    <div style="display:flex;flex-direction:column;align-items:center;padding:20px 0 24px;">
+      <div style="width:90px;height:90px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:50px;margin-bottom:12px;border:3px solid var(--green);">👤</div>
+      <div style="font-size:20px;font-weight:900;color:var(--text-dark);">Олександра 🎯</div>
+      <div style="font-size:13px;color:var(--text-gray);margin-top:4px;font-weight:600;">Схуднення · Ціль 55 кг</div>
+    </div>
+    <!-- Stats row -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;text-align:center;padding:14px 0;">
+        <div><div style="font-size:20px;font-weight:900;color:var(--green);">21</div><div style="font-size:12px;color:var(--text-gray);font-weight:600;">днів поспіль</div></div>
+        <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);"><div style="font-size:20px;font-weight:900;color:var(--green);">3.5</div><div style="font-size:12px;color:var(--text-gray);font-weight:600;">кг скинуто</div></div>
+        <div><div style="font-size:20px;font-weight:900;color:var(--green);">87%</div><div style="font-size:12px;color:var(--text-gray);font-weight:600;">цілей досяг.</div></div>
+      </div>
+    </div>
+    <!-- Menu -->
+    <div class="card" style="margin-bottom:12px;">
+      <div class="srow"><span class="sico">👤</span><span class="slbl">Мої дані</span><span class="sarr">›</span></div>
+      <div class="srow"><span class="sico">🎯</span><span class="slbl">Цілі · Схуднення — 55 кг</span><span class="sarr">›</span></div>
+      <div class="srow"><span class="sico">⚙️</span><span class="slbl">Налаштування</span><span class="sarr">›</span></div>
+      <div class="srow"><span class="sico">🔔</span><span class="slbl">Нагадування</span><span class="sarr">›</span></div>
+      <div class="srow"><span class="sico">👑</span><span class="slbl">Підписка · Premium активна</span><span class="sarr">›</span></div>
+      <div class="srow"><span class="sico">ℹ️</span><span class="slbl">Про додаток</span><span class="sarr">›</span></div>
+    </div>
+    <button class="btn btn-r">🚪 Вийти з акаунту</button>
+  </div>
+  <div class="bnav">
+    <div class="bitem"><div class="bicon">⌂</div><span>Головна</span></div>
+    <div class="bitem"><div class="bicon">📖</div><span>Рецепти</span></div>
+    <div class="bitem"><div class="bicon">⊞</div><span>План</span></div>
+    <div class="bitem"><div class="bicon">📊</div><span>Статистика</span></div>
+    <div class="bitem on"><div class="bicon">👤</div><span>Профіль</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  13. GOALS
+═══════════════════════════════════════════ -->
+<div class="wrap">
+<div class="label">13. Налаштування цілей</div>
+<div class="phone" id="screen-goals">
+  <div class="status">
+    <span class="time">9:41</span>
+    <div class="icons"><span>●●●</span><span>▲</span><span>▌▌▌</span></div>
+  </div>
+  <div class="navbar">
+    <span class="back">‹</span>
+    <span class="ntitle">Моя мета</span>
+  </div>
+  <div class="scroll">
+    <!-- Goal type -->
+    <div class="card" style="margin-bottom:12px;">
+      <div class="srow"><span class="sico">🎯</span><div style="flex:1;"><div class="slbl">Мета</div><div style="font-size:13px;color:var(--green);font-weight:700;margin-top:2px;">Схуднення</div></div><span class="sarr">›</span></div>
+      <div class="srow"><span class="sico">⚖️</span><div style="flex:1;"><div class="slbl">Цільова вага</div><div style="font-size:13px;color:var(--text-gray);font-weight:600;margin-top:2px;">Поточна: 58.5 кг</div></div><span style="font-size:15px;font-weight:800;color:var(--text-dark);">55 кг</span></div>
+      <div class="srow"><span class="sico">📅</span><div style="flex:1;"><div class="slbl">Термін досягнення</div></div><span style="font-size:14px;font-weight:700;color:var(--text-dark);">15.09.2024</span></div>
+      <div class="srow"><span class="sico">🔥</span><div style="flex:1;"><div class="slbl">Добова норма калорій</div></div><span style="font-size:14px;font-weight:700;color:var(--text-dark);">2000 ккал</span></div>
+    </div>
+    <!-- BJW norms -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="padding:14px 16px 6px;font-size:16px;font-weight:800;color:var(--text-dark);">БЖВ норми</div>
+      <div class="srow">
+        <span class="sico">🥩</span>
+        <div style="flex:1;">
+          <div class="slbl">Білки</div>
+          <div style="margin-top:6px;"><div class="track" style="height:6px;"><div class="fill" style="width:80%;background:#F97316;"></div></div></div>
+        </div>
+        <span style="font-size:15px;font-weight:800;color:#F97316;">150 г</span>
+      </div>
+      <div class="srow">
+        <span class="sico">🫒</span>
+        <div style="flex:1;">
+          <div class="slbl">Жири</div>
+          <div style="margin-top:6px;"><div class="track" style="height:6px;"><div class="fill" style="width:57%;background:#3B82F6;"></div></div></div>
+        </div>
+        <span style="font-size:15px;font-weight:800;color:#3B82F6;">70 г</span>
+      </div>
+      <div class="srow">
+        <span class="sico">🌾</span>
+        <div style="flex:1;">
+          <div class="slbl">Вуглеводи</div>
+          <div style="margin-top:6px;"><div class="track" style="height:6px;"><div class="fill" style="width:72%;background:#69C24A;"></div></div></div>
+        </div>
+        <span style="font-size:15px;font-weight:800;color:#69C24A;">250 г</span>
+      </div>
+    </div>
+    <!-- Activity -->
+    <div class="card" style="margin-bottom:16px;">
+      <div style="padding:14px 16px 6px;font-size:16px;font-weight:800;color:var(--text-dark);">Рівень активності</div>
+      <div class="srow"><span class="sico">🧘</span><span class="slbl">Мінімальна активність</span><div style="width:22px;height:22px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;">✓</div></div>
+      <div class="srow"><span class="sico">🚶</span><span class="slbl">Помірна (1-3 рази/тиж.)</span><div style="width:22px;height:22px;border-radius:50%;border:2px solid var(--border);"></div></div>
+      <div class="srow"><span class="sico">🏃</span><span class="slbl">Висока (3-5 разів/тиж.)</span><div style="width:22px;height:22px;border-radius:50%;border:2px solid var(--border);"></div></div>
+    </div>
+    <button class="btn btn-g">Зберегти</button>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
